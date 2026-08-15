@@ -80,12 +80,21 @@ let main = document.querySelector("main");
 let option = document.querySelector(".options");
 //accessing previous button
 let prevBtn = document.querySelector("#prev-btn");
+//variable for left time
+let timeLeft=10;
+//time interval
+let timeInterval;
+//accessing timer
+let timer=document.querySelector(".timer");
 window.addEventListener("load", () => {
     let currentQuestion = questions[currQues];
     displayQuestion(currentQuestion);
 });
 //function for displaying question and options dynamically on screen
 let displayQuestion = (question) => {
+    if(userAns[currQues] === undefined){
+    startTimer();
+    }
     //diplaying cuurent question from array to web page
     questionElement.innerText = question.question;
     //displaying progress content dynamically
@@ -106,6 +115,7 @@ let displayQuestion = (question) => {
         button.append(para);
         //adding event listner on option buttons
         button.addEventListener("click", (evt) => {
+            clearInterval(timeInterval);
             answerCheck(evt.currentTarget, questions[currQues]);
         })
     }
@@ -152,7 +162,8 @@ let resetButton = () => {
     currQues = 0;
     score = 0;
     userAns = [];
-    main.innerHTML = ` <h3 id="progress"></h3>
+    main.innerHTML = `<div class="timer"></div>
+        <h3 id="progress"></h3>
         <p id="question"></p>
         <div class="options">
         </div>
@@ -166,6 +177,7 @@ let resetButton = () => {
     option = document.querySelector(".options");
     nextBtn = document.querySelector("#next-btn");
     prevBtn = document.querySelector("#prev-btn");
+    timer=document.querySelector(".timer");
     //calling display function
     displayQuestion(questions[currQues]);
     //as older next button is detroyed so old event listner is also destroy so we have to add eventlistner on next btn again
@@ -241,6 +253,41 @@ let nextButton = () => {
 nextBtn.addEventListener("click", () => {
     nextButton();
 });
+//function controlling timer
+let timeOut=()=>{
+    let options=document.querySelectorAll(".opt-btn");
+    let curQuestion=questions[currQues];
+    options.forEach((option)=>{
+        option.disabled=true;
+        let optPara=option.querySelector(".option-para");
+        if(optPara.innerText === curQuestion.answer){
+            option.classList.add("correct");
+            userAns[currQues]=optPara.innerText;
+        }
+    })
+}
+//function for start timer
+let startTimer=()=>{
+    clearInterval(timeInterval);
+    timeLeft=10;
+    timer.innerText=timeLeft;
+    timer.style.background=`conic-gradient(rgb(17, 151, 212) 0%,white 0%)`;
+    timeInterval=setInterval(() => {
+        timeLeft--;
+        timer.innerText=timeLeft;
+        let percentage=((10-timeLeft)/10)*100;
+        timer.style.background=`conic-gradient(
+        rgb(17, 151, 212) ${percentage}%,
+        white ${percentage}%
+        )`;
+        if(timeLeft === 0){
+            clearInterval(timeInterval);
+            timeOut();
+        }
+        
+    }, 1000);
+    
+}
 //function for previous button 
 let previousButton = () => {
     currQues--;

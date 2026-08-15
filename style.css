@@ -27,6 +27,21 @@ h1{
     color: var(--heading);
     font-weight: 700;
 }
+.timer{
+    margin-top: 1rem;
+    height: 30px;
+    width: 30px;
+    display: flex;
+    color: var(--heading);
+    background: conic-gradient(
+      rgb(17, 151, 212) 0%,
+      white 0%
+    );
+    align-items: center;
+    justify-content: center;
+    border: 2px solid black;
+    border-radius: 50%;
+}
 .assessment-container{
     width: 90%;
     min-width: 350px;
@@ -144,7 +159,7 @@ h1{
     background-color: #22C55E;
     padding: 0.5rem;
     color: antiquewhite;
-    margin-left: 15rem;
+    margin-left: 45%;
 }
 .reset-btn:hover{
     cursor: pointer;
