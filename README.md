@@ -6,6 +6,7 @@ A simple and interactive Quiz App built using **HTML, CSS, and JavaScript**.
 
 - Multiple-choice quiz questions
 - Dynamically displayed questions and options
+- Countdown timer for each question
 - Correct and incorrect answer feedback
 - Automatically displays the correct answer when a wrong answer is selected
 - Disables options after an answer is selected
